@@ -24,7 +24,7 @@ namespace VotingApp
 
             Console.WriteLine(votingService.Vote(voter.Id, clientVote.data, clientVote.signature));
 
-            Console.WriteLine("\nIn case the voting data is corrupted or invalid:");
+            Console.WriteLine("\nIn case the voter already voted:");
             Console.WriteLine(votingService.Vote(voter.Id, "sdasdasd", clientVote.signature));
 
             Console.WriteLine("\nIn case the voter is not existing or is not authorized to vote:");

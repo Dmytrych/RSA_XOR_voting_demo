@@ -28,6 +28,11 @@ public class VotingService
             return "The voter is not valid";
         }
 
+        if (voter.Voted)
+        {
+            return "The voter already voted";
+        }
+
         var decryptedData = XorEncryption.EncryptDecrypt(encryptedVotingResult);
 
         if (!ValidateSignature(decryptedData, signature, voter.PublicKey))
@@ -47,6 +52,7 @@ public class VotingService
         }
 
         candidate.Votes++;
+        voter.Voted = true;
         return "Vote counted";
     }
 
