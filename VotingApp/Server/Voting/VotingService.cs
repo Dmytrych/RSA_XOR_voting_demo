@@ -8,7 +8,7 @@ public class VotingService
     private readonly VoterRepository voterRepository;
     private readonly RsaEncryption rsaEncryption;
     private readonly CandidateRepository candidateRepository;
-    
+
     public VotingService(
         VoterRepository voterRepository,
         RsaEncryption rsaEncryption,
@@ -18,8 +18,8 @@ public class VotingService
         this.rsaEncryption = rsaEncryption;
         this.candidateRepository = candidateRepository;
     }
-    
-    public string Vote(int voterId, string encryptedVotingResult)
+
+    public string Vote(int voterId, string encryptedVotingResult, string signature)
     {
         var voter = voterRepository.GetVoterById(voterId);
 
@@ -27,40 +27,42 @@ public class VotingService
         {
             return "The voter is not valid";
         }
-        
-        var votingResult = DecryptAll(encryptedVotingResult, voter.PrivateKey);
 
-        if (!votingResult.isValid)
+        var decryptedData = XorEncryption.EncryptDecrypt(encryptedVotingResult);
+
+        if (!ValidateSignature(decryptedData, signature, voter.PublicKey))
+        {
+            return "The signature is invalid";
+        }
+
+        if (!int.TryParse(decryptedData, out int candidateId))
         {
             return "The vote was invalid";
         }
 
-        if (!int.TryParse(votingResult.result, out int candidateId))
-        {
-            return "The vote was invalid";
-        }
-        
         var candidate = candidateRepository.GetCandidateById(candidateId);
         if (candidate == null)
         {
-            return "The vote was invalid";
+            return "The candidate with the given Id does not exist";
         }
 
         candidate.Votes++;
         return "Vote counted";
     }
 
-    private (bool isValid, string result) DecryptAll(string encryptedVotingResult, string voterPrivateKey)
+    private bool ValidateSignature(string realData, string signature, string voterPrivateKey)
     {
-        var xorDecryptedResult = XorEncryption.EncryptDecrypt(encryptedVotingResult);
+        var dataHash = Md5Hash.GetHash(realData);
+
         try
         {
-            var result = rsaEncryption.Decrypt(xorDecryptedResult, voterPrivateKey);
-            return (true, result);
+            var result = rsaEncryption.Decrypt(signature, voterPrivateKey);
+
+            return result == dataHash;
         }
         catch
         {
-            return (false, string.Empty);
+            return false;
         }
     }
 }

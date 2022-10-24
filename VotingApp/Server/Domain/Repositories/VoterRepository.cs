@@ -35,8 +35,8 @@ public class VoterRepository : IVoterRepository
             voters.Add(new Voter
             {
                 Id = i,
-                PrivateKey = rsa.GetPrivateKey(),
-                PublicKey = rsa.GetPublicKey()
+                PublicKey = rsa.GetPrivateKey(),
+                PrivateKey = rsa.GetPublicKey()
             });
         }
     }

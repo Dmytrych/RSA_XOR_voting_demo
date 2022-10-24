@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "XZ0wpT0CkH88YbfrcIzWMd1X/eO+kCsWv+sHk5kMLKRoP6X/JS4mQ3xSV9aJjl6zEv1FlkfYFuKVs0ow0UlTMA==",
+  "dgSpecHash": "SFm4iajAYRt79PjzPfHV4rVvmE50z1ShajAYrY4Xk/tCbJJl/BFO2qMsRFBdkegAjWng2LGoxHsPy35VXMP30Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Lampa\\RiderProjects\\VotingApp\\VotingApp\\VotingApp.csproj",
+  "projectFilePath": "C:\\Code\\Repos\\RSA_XOR_voting_demo\\VotingApp\\VotingApp.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

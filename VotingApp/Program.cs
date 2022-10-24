@@ -18,17 +18,17 @@ namespace VotingApp
 
             var votingService = new VotingService(voterRepository, new RsaEncryption(), candidateRepository);
 
-            var clientVote = client.GetSecureRandomVote(candidateRepository.GetCandidates(), voter.PublicKey);
-            
+            var clientVote = client.GetSecureRandomVote(candidateRepository.GetCandidates(), voter.PrivateKey);
+
             //At this point the data is transferred to the server via internet
 
-            Console.WriteLine(votingService.Vote(voter.Id, clientVote));
+            Console.WriteLine(votingService.Vote(voter.Id, clientVote.data, clientVote.signature));
 
             Console.WriteLine("\nIn case the voting data is corrupted or invalid:");
-            Console.WriteLine(votingService.Vote(voter.Id, "sdasdasd"));
-            
+            Console.WriteLine(votingService.Vote(voter.Id, "sdasdasd", clientVote.signature));
+
             Console.WriteLine("\nIn case the voter is not existing or is not authorized to vote:");
-            Console.WriteLine(votingService.Vote(int.MaxValue, clientVote));
+            Console.WriteLine(votingService.Vote(int.MaxValue, clientVote.data, clientVote.signature));
         }
     }
 }
