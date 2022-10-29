@@ -24,13 +24,8 @@
           "net6.0"
         ],
         "sources": {
-          "C:\\Code\\Repos\\.nupackages": {},
-          "C:\\Code\\Repos\\PciRepos\\.nupackages": {},
-          "C:\\Code\\Repos\\nddp-platform": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://arm.seli.gic.ericsson.se/artifactory/api/nuget/proj-sdt-nddp-backup-symbol-nuget-local": {},
-          "https://arm.seli.gic.ericsson.se/artifactory/api/nuget/v3/proj-sdt-nddp-backup-nuget-local": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
@@ -47,6 +42,12 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "BouncyCastle.NetCore": {
+              "target": "Package",
+              "version": "[1.9.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

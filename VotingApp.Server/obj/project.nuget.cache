@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "fNTo6/LPQiEtaVlpgATIRUZIY29CSjRof/fld+fsCpobPu94VGMzhYNLzeNCgFFllTe9aDy1Vki051E7rr3tVQ==",
+  "success": true,
+  "projectFilePath": "C:\\Code\\Repos\\RSA_XOR_voting_demo\\VotingApp.Server\\VotingApp.Server.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\dmytro.habaznia\\.nuget\\packages\\bouncycastle.netcore\\1.9.0\\bouncycastle.netcore.1.9.0.nupkg.sha512"
+  ],
+  "logs": []
+}

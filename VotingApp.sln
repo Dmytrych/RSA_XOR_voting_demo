@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotingApp", "VotingApp\VotingApp.csproj", "{52210A72-E22C-4200-875D-C2911127E384}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotingApp.Server", "VotingApp.Server\VotingApp.Server.csproj", "{1B3608B3-FDAE-48FF-9330-262A4EAABB94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{52210A72-E22C-4200-875D-C2911127E384}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52210A72-E22C-4200-875D-C2911127E384}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52210A72-E22C-4200-875D-C2911127E384}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B3608B3-FDAE-48FF-9330-262A4EAABB94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B3608B3-FDAE-48FF-9330-262A4EAABB94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B3608B3-FDAE-48FF-9330-262A4EAABB94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B3608B3-FDAE-48FF-9330-262A4EAABB94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -10,6 +10,19 @@
         "runtime": {
           "lib/netstandard2.0/BouncyCastle.Crypto.dll": {}
         }
+      },
+      "VotingApp/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "BouncyCastle.NetCore": "1.9.0"
+        },
+        "compile": {
+          "bin/placeholder/VotingApp.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/VotingApp.dll": {}
+        }
       }
     }
   },
@@ -28,11 +41,17 @@
         "lib/netstandard2.0/BouncyCastle.Crypto.dll",
         "lib/netstandard2.0/BouncyCastle.Crypto.xml"
       ]
+    },
+    "VotingApp/1.0.0": {
+      "type": "project",
+      "path": "../VotingApp/VotingApp.csproj",
+      "msbuildProject": "../VotingApp/VotingApp.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "BouncyCastle.NetCore >= 1.9.0"
+      "BouncyCastle.NetCore >= 1.9.0",
+      "VotingApp >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -42,11 +61,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Code\\Repos\\RSA_XOR_voting_demo\\VotingApp\\VotingApp.csproj",
-      "projectName": "VotingApp",
-      "projectPath": "C:\\Code\\Repos\\RSA_XOR_voting_demo\\VotingApp\\VotingApp.csproj",
+      "projectUniqueName": "C:\\Code\\Repos\\RSA_XOR_voting_demo\\VotingApp.Server\\VotingApp.Server.csproj",
+      "projectName": "VotingApp.Server",
+      "projectPath": "C:\\Code\\Repos\\RSA_XOR_voting_demo\\VotingApp.Server\\VotingApp.Server.csproj",
       "packagesPath": "C:\\Users\\dmytro.habaznia\\.nuget\\packages\\",
-      "outputPath": "C:\\Code\\Repos\\RSA_XOR_voting_demo\\VotingApp\\obj\\",
+      "outputPath": "C:\\Code\\Repos\\RSA_XOR_voting_demo\\VotingApp.Server\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -65,7 +84,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Code\\Repos\\RSA_XOR_voting_demo\\VotingApp\\VotingApp.csproj": {
+              "projectPath": "C:\\Code\\Repos\\RSA_XOR_voting_demo\\VotingApp\\VotingApp.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -94,6 +117,9 @@
         "assetTargetFallback": true,
         "warn": true,
         "frameworkReferences": {
+          "Microsoft.AspNetCore.App": {
+            "privateAssets": "none"
+          },
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
