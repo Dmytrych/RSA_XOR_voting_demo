@@ -1,4 +1,5 @@
-﻿using Org.BouncyCastle.Math;
+﻿using System.Text;
+using Org.BouncyCastle.Math;
 using VotingApp.Common;
 using VotingApp.Server.Domain.Repositories;
 using VotingApp.Server.Dto;
@@ -10,15 +11,18 @@ namespace VotingApp.Server.Services
         private readonly SigratureService sigratureService;
         private readonly IVoterRepository voterRepository;
         private readonly ICandidateRepository candidateRepository;
+        private readonly RsaEncryption rsaEncryption;
 
         public VotingService(
             SigratureService sigratureService,
             IVoterRepository voterRepository,
-            ICandidateRepository candidateRepository)
+            ICandidateRepository candidateRepository,
+            RsaEncryption rsaEncryption)
         {
             this.sigratureService = sigratureService;
             this.voterRepository = voterRepository;
             this.candidateRepository = candidateRepository;
+            this.rsaEncryption = rsaEncryption;
         }
 
         public IReadOnlyCollection<BigInteger> VerifyData(int voterId, IReadOnlyCollection<VotingPackage> packages)
@@ -39,11 +43,11 @@ namespace VotingApp.Server.Services
             return signatures;
         }
 
-        public string Vote(SignedVotingPaper paper, RsaEncryption rsaEncryption)
+        public string Vote(SignedVotingPaper paper)
         {
             var decryptedData = rsaEncryption.Decrypt(paper.EncryptedData);
 
-            if (!sigratureService.VerifySignature(paper.Signature, decryptedData))
+            if (!sigratureService.VerifySignature(new BigInteger(Encoding.UTF8.GetBytes(paper.Signature)), decryptedData))
             {
                 return "The signature was invalid";
             }
@@ -64,9 +68,9 @@ namespace VotingApp.Server.Services
             return "Your vote was successfully counted";
         }
 
-        private BigInteger SignPaper(VotingPaper paper)
+        private BigInteger SignPaper(NetworkVotingPaper paper)
         {
-            return sigratureService.SignBlindedMessage(paper.Data);
+            return sigratureService.SignBlindedMessage(new BigInteger(paper.Data));
         }
 
         private VotingPackage GetRandomPackage(IReadOnlyCollection<VotingPackage> packages)

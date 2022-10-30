@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "XQmKorFIlzT+i/pE/NnINdT3/e0+GxRwzaf91BS/JnlU3J0qEMUN9eAL+R687MbD4i1Pl4dxVOPGEcu0W2QiRA==",
+  "dgSpecHash": "oXf/nRj5Xw6iqZvy7fNKXPOqPsj9iXGTU/B8+0ORaHqyrR5xQveVCsce8w5g4flKg9SJE6GUwBmDMaWV90Y7mg==",
   "success": true,
-  "projectFilePath": "C:\\Code\\Repos\\RSA_XOR_voting_demo\\VotingApp\\VotingApp.csproj",
+  "projectFilePath": "C:\\Users\\Lampa\\RiderProjects\\VotingApp\\VotingApp\\VotingApp.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\dmytro.habaznia\\.nuget\\packages\\bouncycastle.netcore\\1.9.0\\bouncycastle.netcore.1.9.0.nupkg.sha512"
+    "C:\\Users\\Lampa\\.nuget\\packages\\bouncycastle.netcore\\1.9.0\\bouncycastle.netcore.1.9.0.nupkg.sha512"
   ],
   "logs": []
 }

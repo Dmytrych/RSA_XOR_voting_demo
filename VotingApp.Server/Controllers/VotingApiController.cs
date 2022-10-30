@@ -10,7 +10,7 @@ namespace VotingApp.Server.Controllers
     public class VotingApiController : ControllerBase
     {
         private readonly IVotingService votingService;
-        private static readonly RsaEncryption rsaEncryption;
+        private readonly RsaEncryption rsaEncryption;
 
         public VotingApiController(IVotingService votingService, RsaEncryption rsaEncryption)
         {
@@ -18,16 +18,22 @@ namespace VotingApp.Server.Controllers
             this.rsaEncryption = rsaEncryption;
         }
 
-        [HttpGet("[action]")]
-        public SignatureResponse VerifyData(int voterId, IReadOnlyCollection<VotingPackage> votingPackages)
+        [HttpPost("[action]")]
+        public SignatureResponse VerifyData(VerificarionRequest request)
         {
-            var results = votingService.VerifyData(votingPackages);
+            var results = votingService.VerifyData(request.VoterId, request.VotingPackages);
             var key = rsaEncryption.GetPublicKey();
             return new SignatureResponse
             {
-                SignedData = results,
+                SignedData = results.Select(result => result.ToByteArray()).ToList(),
                 ServerRsaKey = key
             };
+        }
+        
+        [HttpPost("[action]")]
+        public string Vote(SignedVotingPaper votingPaper)
+        {
+            return votingService.Vote(votingPaper);
         }
     }
 }

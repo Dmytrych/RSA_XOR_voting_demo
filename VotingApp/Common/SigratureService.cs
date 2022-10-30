@@ -22,12 +22,17 @@ namespace VotingApp.Common
 
         public BigInteger GetRawMessage(string message)
         {
-            return new BigInteger(Encoding.ASCII.GetBytes(message));
+            return new BigInteger(Encoding.UTF8.GetBytes(message));
         }
 
         public BigInteger BlindMessage(string message)
         {
             return randomBigInt.ModPow(PublicKey.DorEFactor, PublicKey.NFactor).Multiply(GetRawMessage(message)).Mod(PublicKey.NFactor);
+        }
+        
+        public BigInteger BlindMessage(BigInteger message)
+        {
+            return randomBigInt.ModPow(PublicKey.DorEFactor, PublicKey.NFactor).Multiply(message).Mod(PublicKey.NFactor);
         }
 
         public BigInteger SignBlindedMessage(BigInteger blindedMessage)
@@ -35,7 +40,7 @@ namespace VotingApp.Common
             return blindedMessage.ModPow(PrivateKey.DorEFactor, PrivateKey.NFactor);
         }
 
-        public BigInteger UnblindMessage(BigInteger blindedString)
+        public BigInteger  UnblindMessage(BigInteger blindedString)
         {
             return randomBigInt.ModInverse(PublicKey.NFactor).Multiply(blindedString).Mod(PublicKey.NFactor);
         }

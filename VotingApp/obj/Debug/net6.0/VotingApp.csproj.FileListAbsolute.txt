@@ -30,3 +30,5 @@ C:\Code\Repos\RSA_XOR_voting_demo\VotingApp\obj\Debug\net6.0\VotingApp.genruntim
 C:\Code\Repos\RSA_XOR_voting_demo\VotingApp\obj\Debug\net6.0\ref\VotingApp.dll
 C:\Code\Repos\RSA_XOR_voting_demo\VotingApp\bin\Debug\net6.0\BouncyCastle.Crypto.dll
 C:\Code\Repos\RSA_XOR_voting_demo\VotingApp\obj\Debug\net6.0\VotingApp.csproj.CopyComplete
+C:\Users\Lampa\RiderProjects\VotingApp\VotingApp\bin\Debug\net6.0\BouncyCastle.Crypto.dll
+C:\Users\Lampa\RiderProjects\VotingApp\VotingApp\obj\Debug\net6.0\VotingApp.csproj.CopyComplete

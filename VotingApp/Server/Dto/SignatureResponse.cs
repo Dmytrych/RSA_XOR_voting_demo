@@ -4,7 +4,7 @@ namespace VotingApp.Server.Dto
 {
     public class SignatureResponse
     {
-        public IReadOnlyCollection<BigInteger> SignedData { get; set; }
+        public IReadOnlyCollection<byte[]> SignedData { get; set; }
 
         public string ServerRsaKey { get; set; }
     }
