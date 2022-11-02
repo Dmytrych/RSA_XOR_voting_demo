@@ -12,7 +12,7 @@ namespace VotingApp.Client
     {
         private const string serverUrl = "http://localhost:5288/VotingApi";
         private static SigratureService sigratureService = new SigratureService();
-        
+
         public static async Task Main()
         {
             //Console.WriteLine(Encoding.ASCII.GetString(sigratureService.UnblindMessage().ToByteArray()));
@@ -20,7 +20,9 @@ namespace VotingApp.Client
             var voterId = 1;
             var candidateVotes = new List<string>();
 
-            sigratureService = new SigratureService(await SendKeyRequest());
+            var serverKey = await SendKeyRequest();
+
+            sigratureService = new SigratureService(serverKey.ToRsaKey());
 
             foreach (var candidate in candidateRepository.GetCandidates())
             {
@@ -55,14 +57,14 @@ namespace VotingApp.Client
             await SendValidateRequest(vote, signedData.ServerRsaKey, unblindedSignature);
         }
 
-        public static async Task<RsaKey> SendKeyRequest()
+        public static async Task<NetworkPublicKey> SendKeyRequest()
         {
             var httpClient = new HttpClient();
-            var result = await httpClient.GetAsync(serverUrl + "/GetKeys");
+            var result = await httpClient.PostAsync(serverUrl + "/GetKeys", new StringContent(string.Empty));
 
             if (result.IsSuccessStatusCode)
             {
-                return await result.Content.ReadFromJsonAsync<RsaKey>();
+                return await result.Content.ReadFromJsonAsync<NetworkPublicKey>();
             }
 
             return null;

@@ -10,9 +10,11 @@ namespace VotingApp.Common
             EFactor = keyParameters.Exponent;
             NFactor = keyParameters.Modulus;
         }
-        
-        public RsaKey()
+
+        public RsaKey(BigInteger exponent, BigInteger modulus)
         {
+            EFactor = exponent;
+            NFactor = modulus;
         }
 
         public BigInteger EFactor { get; set; }

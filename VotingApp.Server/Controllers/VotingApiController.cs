@@ -31,17 +31,22 @@ namespace VotingApp.Server.Controllers
                 ServerRsaKey = key
             };
         }
-        
+
         [HttpPost("[action]")]
         public string Vote(SignedVotingPaper votingPaper)
         {
             return votingService.Vote(votingPaper);
         }
-        
-        [HttpGet("[action]")]
-        public RsaKey GetKeys()
+
+        [HttpPost("[action]")]
+        public NetworkPublicKey GetKeys()
         {
-            return votingService.GetPublicKey();
+            var key = votingService.GetPublicKey();
+            return new NetworkPublicKey
+            {
+                EFactor = key.EFactor.ToByteArray(),
+                NFactor = key.NFactor.ToByteArray()
+            };
         }
     }
 }
