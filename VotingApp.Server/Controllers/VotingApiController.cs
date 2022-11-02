@@ -12,7 +12,9 @@ namespace VotingApp.Server.Controllers
         private readonly IVotingService votingService;
         private readonly RsaEncryption rsaEncryption;
 
-        public VotingApiController(IVotingService votingService, RsaEncryption rsaEncryption)
+        public VotingApiController(
+            IVotingService votingService,
+            RsaEncryption rsaEncryption)
         {
             this.votingService = votingService;
             this.rsaEncryption = rsaEncryption;
@@ -34,6 +36,12 @@ namespace VotingApp.Server.Controllers
         public string Vote(SignedVotingPaper votingPaper)
         {
             return votingService.Vote(votingPaper);
+        }
+        
+        [HttpGet("[action]")]
+        public RsaKey GetKeys()
+        {
+            return votingService.GetPublicKey();
         }
     }
 }

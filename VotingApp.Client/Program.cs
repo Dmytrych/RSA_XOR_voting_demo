@@ -20,6 +20,8 @@ namespace VotingApp.Client
             var voterId = 1;
             var candidateVotes = new List<string>();
 
+            sigratureService = new SigratureService(await SendKeyRequest());
+
             foreach (var candidate in candidateRepository.GetCandidates())
             {
                 candidateVotes.Add(candidate.Id.ToString());
@@ -52,7 +54,20 @@ namespace VotingApp.Client
 
             await SendValidateRequest(vote, signedData.ServerRsaKey, unblindedSignature);
         }
-        
+
+        public static async Task<RsaKey> SendKeyRequest()
+        {
+            var httpClient = new HttpClient();
+            var result = await httpClient.GetAsync(serverUrl + "/GetKeys");
+
+            if (result.IsSuccessStatusCode)
+            {
+                return await result.Content.ReadFromJsonAsync<RsaKey>();
+            }
+
+            return null;
+        }
+
         public static async Task SendValidateRequest(string vote, string serverKey, BigInteger signature)
         {
             var httpClient = new HttpClient();
@@ -90,7 +105,7 @@ namespace VotingApp.Client
                 Papers = votes.Select(vote => new NetworkVotingPaper()
                 {
                     Data = sigratureService.BlindMessage(vote).ToByteArray(),
-                    NFactor = sigratureService.PrivateKey.NFactor.ToByteArray(),
+                    NFactor = sigratureService.GetNFactor().ToByteArray(),
                     RandCoef = sigratureService.randomBigInt.ToByteArray(),
                     OriginalVote = vote
                 }).ToList()

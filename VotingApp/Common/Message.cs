@@ -6,38 +6,37 @@ using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.Math;
 
-namespace VotingApp.Common
+namespace BlindSign
 {
-    public class SigratureService
+    public class Message
     {
-        public RsaKey PublicRsaKey { get; set; }
-        
-        public SigratureService()
+        public Message(string msg)
         {
-            AsymmetricCipherKeyPair keyPair = GenerateKeyPair(1024);
-            PrivateKey = (RsaKeyParameters)keyPair.Private;
-            PublicKey = (RsaKeyParameters)keyPair.Public;
-            randomBigInt = GenerateRandomRelativelyPrimeBigInteger();
-            PublicRsaKey = new RsaKey(PublicKey);
-        }
-        
-        public SigratureService(RsaKey rsaKey)
-        {
-            PublicKey = new RsaKeyParameters(false, rsaKey.NFactor, rsaKey.EFactor);
-            PublicRsaKey = rsaKey;
-            randomBigInt = GenerateRandomRelativelyPrimeBigInteger();
+            AsymmetricCipherKeyPair keyPair = this.GenerateKeyPair(1024);
+            this.PrivateKey = (RsaKeyParameters)keyPair.Private;
+            this.PublicKey = (RsaKeyParameters)keyPair.Public;
+            this.message = msg;
+            this.randomBigInt = this.GenerateRandomRelativelyPrimeBigInteger();
         }
 
-        public RsaKeyParameters PublicKey { get; }
-
-        public BigInteger GetRawMessage(string message)
+        public String message
         {
-            return new BigInteger(Encoding.UTF8.GetBytes(message));
+            get;
         }
 
-        public BigInteger BlindMessage(string message)
+        public RsaKeyParameters PublicKey
         {
-            return this.randomBigInt.ModPow(this.GetEFactor(), this.GetNFactor()).Multiply(this.GetRawMessage(message)).Mod(this.GetNFactor());
+            get;
+        }
+
+        public BigInteger GetRawMessage()
+        {
+            return new BigInteger(Encoding.ASCII.GetBytes(message));
+        }
+
+        public BigInteger BlindMessage()
+        {
+            return this.randomBigInt.ModPow(this.GetEFactor(), this.GetNFactor()).Multiply(this.GetRawMessage()).Mod(this.GetNFactor());
         }
 
         public BigInteger SignBlindedMessage(BigInteger blindedMessage)
@@ -45,20 +44,20 @@ namespace VotingApp.Common
             return blindedMessage.ModPow(this.GetDFactor(), this.GetNFactor());
         }
 
-        public BigInteger  UnblindMessage(BigInteger blindedString)
+        public BigInteger UnblindMessage(BigInteger bs)
         {
-            return this.randomBigInt.ModInverse(this.GetNFactor()).Multiply(blindedString).Mod(this.GetNFactor());
+            return this.randomBigInt.ModInverse(this.GetNFactor()).Multiply(bs).Mod(this.GetNFactor());
         }
 
         public BigInteger GetMsgFromSignedData(BigInteger signed)
         {
-            return signed.ModPow(GetEFactor(), GetNFactor());
+            return signed.ModPow(this.GetEFactor(), this.GetNFactor());
         }
 
-        public bool VerifySignature(BigInteger unblinded, string dataToValidate)
+        public bool VerifySignature(BigInteger unblinded)
         {
             //signature of m should = (m^d) mod n
-            BigInteger sig_of_m = GetRawMessage(dataToValidate).ModPow(GetDFactor(), GetNFactor());
+            BigInteger sig_of_m = this.GetRawMessage().ModPow(this.GetDFactor(), this.GetNFactor());
             return unblinded.Equals(sig_of_m);
         }
 
@@ -71,23 +70,26 @@ namespace VotingApp.Common
             return keyGen.GenerateKeyPair();
         }
 
-        public BigInteger randomBigInt;
+        private BigInteger randomBigInt;
 
-        public RsaKeyParameters PrivateKey { get; }
-        
-        public BigInteger GetDFactor()
+        private RsaKeyParameters PrivateKey
         {
-            return PrivateKey.Exponent;
+            get;
         }
-        
-        public BigInteger GetNFactor()
+
+        private BigInteger GetDFactor()
         {
-            return PublicKey.Modulus;
+            return this.PrivateKey.Exponent;
         }
-        
-        public BigInteger GetEFactor()
+
+        private BigInteger GetNFactor()
         {
-            return PublicKey.Exponent;
+            return this.PublicKey.Modulus;
+        }
+
+        private BigInteger GetEFactor()
+        {
+            return this.PublicKey.Exponent;
         }
 
 
@@ -99,7 +101,7 @@ namespace VotingApp.Common
             {
                 tempRandomBigInt = GenerateRandomBigInteger();
             }
-            while (AreRelativelyPrime(tempRandomBigInt, GetNFactor()));
+            while (this.AreRelativelyPrime(tempRandomBigInt, this.GetNFactor()));
 
             return tempRandomBigInt;
         }

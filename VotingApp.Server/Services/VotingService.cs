@@ -68,6 +68,11 @@ namespace VotingApp.Server.Services
             return "Your vote was successfully counted";
         }
 
+        public RsaKey GetPublicKey()
+        {
+            return sigratureService.PublicRsaKey;
+        }
+
         private BigInteger SignPaper(NetworkVotingPaper paper)
         {
             return sigratureService.SignBlindedMessage(new BigInteger(paper.Data));

@@ -7,11 +7,15 @@ namespace VotingApp.Common
     {
         public RsaKey(RsaKeyParameters keyParameters)
         {
-            DorEFactor = keyParameters.Exponent;
+            EFactor = keyParameters.Exponent;
             NFactor = keyParameters.Modulus;
         }
+        
+        public RsaKey()
+        {
+        }
 
-        public BigInteger DorEFactor { get; set; }
+        public BigInteger EFactor { get; set; }
 
         public BigInteger NFactor { get; set; }
     }

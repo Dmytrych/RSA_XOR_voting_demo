@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using BlindSign;
 using VotingApp.Common;
 
 namespace VotingApp
@@ -8,14 +9,17 @@ namespace VotingApp
         public static void Main()
         {
             var data = "asdasdasd";
-            var sign1 = new SigratureService();
             var sign2 = new SigratureService();
 
+            var pubKey = sign2.PublicRsaKey;
+            var sign1 = new SigratureService(pubKey);
+
             var a = sign1.BlindMessage(data);
-            var b = sign1.SignBlindedMessage(a);
-            var ub = sign1.UnblindMessage(b);
+            var s = sign2.SignBlindedMessage(a);
+            var ub = sign1.UnblindMessage(s);
             
-            Console.WriteLine(sign1.VerifySignature(ub, data));
+            Console.WriteLine(sign2.VerifySignature(ub, data));
+
             // var random = new Random();
             // var voterRepository = new VoterRepository();
             // var candidateRepository = new CandidateRepository();

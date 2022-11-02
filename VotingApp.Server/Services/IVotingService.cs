@@ -9,5 +9,7 @@ namespace VotingApp.Server.Services
         IReadOnlyCollection<BigInteger> VerifyData(int voterId, IReadOnlyCollection<VotingPackage> packages);
 
         string Vote(SignedVotingPaper paper);
+
+        RsaKey GetPublicKey();
     }
 }
