@@ -191,23 +191,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\dmytro.habaznia\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\Lampa\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Code\\Repos\\RSA_XOR_voting_demo\\VotingApp.Server\\VotingApp.Server.csproj",
+      "projectUniqueName": "C:\\Users\\Lampa\\RiderProjects\\VotingApp\\VotingApp.Server\\VotingApp.Server.csproj",
       "projectName": "VotingApp.Server",
-      "projectPath": "C:\\Code\\Repos\\RSA_XOR_voting_demo\\VotingApp.Server\\VotingApp.Server.csproj",
-      "packagesPath": "C:\\Users\\dmytro.habaznia\\.nuget\\packages\\",
-      "outputPath": "C:\\Code\\Repos\\RSA_XOR_voting_demo\\VotingApp.Server\\obj\\",
+      "projectPath": "C:\\Users\\Lampa\\RiderProjects\\VotingApp\\VotingApp.Server\\VotingApp.Server.csproj",
+      "packagesPath": "C:\\Users\\Lampa\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Lampa\\RiderProjects\\VotingApp\\VotingApp.Server\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\dmytro.habaznia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Lampa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -215,14 +216,15 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Users\\Lampa\\RiderProjects\\NovaPoshta.Client\\NovaPoshta.Client\\bin\\Debug": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Code\\Repos\\RSA_XOR_voting_demo\\VotingApp\\VotingApp.csproj": {
-              "projectPath": "C:\\Code\\Repos\\RSA_XOR_voting_demo\\VotingApp\\VotingApp.csproj"
+            "C:\\Users\\Lampa\\RiderProjects\\VotingApp\\VotingApp\\VotingApp.csproj": {
+              "projectPath": "C:\\Users\\Lampa\\RiderProjects\\VotingApp\\VotingApp\\VotingApp.csproj"
             }
           }
         }
@@ -256,7 +258,8 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -268,7 +271,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }

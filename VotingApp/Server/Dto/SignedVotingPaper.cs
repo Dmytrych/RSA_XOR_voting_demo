@@ -8,7 +8,7 @@ namespace VotingApp.Server.Dto
         //
         // public BigInteger NFactor { get; set; }
 
-        public string Signature { get; set; }
+        public byte[] Signature { get; set; }
 
         public string EncryptedData { get; set; }
     }

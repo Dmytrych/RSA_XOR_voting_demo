@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Text;
+using Microsoft.AspNetCore.Mvc;
 using VotingApp.Common;
 using VotingApp.Server.Dto;
 using VotingApp.Server.Services;
@@ -38,7 +39,7 @@ namespace VotingApp.Server.Controllers
             return votingService.Vote(votingPaper);
         }
 
-        [HttpPost("[action]")]
+        [HttpGet("[action]")]
         public NetworkPublicKey GetKeys()
         {
             var key = votingService.GetPublicKey();

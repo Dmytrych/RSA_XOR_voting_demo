@@ -29,7 +29,7 @@ namespace VotingApp.Client
                 candidateVotes.Add(candidate.Id.ToString());
             }
 
-            var package = FormVotingPackage(candidateVotes);
+            var package = FormVotingPackage(candidateVotes, voterId);
             var request = new List<VotingPackage>();
 
             for (int i = 0; i < 10; i++)
@@ -49,8 +49,6 @@ namespace VotingApp.Client
 
             var signatures = votingPaperSignatures.Select(signature => sigratureService.UnblindMessage(signature));
 
-            var votedCandidateBytes = sigratureService.UnblindMessage(new BigInteger(package.Papers.First().Data));
-
             var vote = package.Papers.First().OriginalVote;
             var unblindedSignature = signatures.First();
 
@@ -60,7 +58,7 @@ namespace VotingApp.Client
         public static async Task<NetworkPublicKey> SendKeyRequest()
         {
             var httpClient = new HttpClient();
-            var result = await httpClient.PostAsync(serverUrl + "/GetKeys", new StringContent(string.Empty));
+            var result = await httpClient.GetAsync(serverUrl + "/GetKeys");
 
             if (result.IsSuccessStatusCode)
             {
@@ -75,7 +73,7 @@ namespace VotingApp.Client
             var httpClient = new HttpClient();
             var data = JsonSerializer.Serialize(new SignedVotingPaper
             {
-                Signature = Encoding.UTF8.GetString(signature.ToByteArray()),
+                Signature = signature.ToByteArray(),
                 EncryptedData = RsaEncryption.Encrypt(vote, serverKey)
             });
             var result = await httpClient.PostAsync(
@@ -101,12 +99,12 @@ namespace VotingApp.Client
             return null;
         }
 
-        private static VotingPackage FormVotingPackage(IReadOnlyCollection<string> votes)
+        private static VotingPackage FormVotingPackage(IReadOnlyCollection<string> votes, int voterId)
             => new()
             {
                 Papers = votes.Select(vote => new NetworkVotingPaper()
                 {
-                    Data = sigratureService.BlindMessage(vote).ToByteArray(),
+                    Data = sigratureService.BlindMessage(JsonSerializer.Serialize(new VotingData{ Vote = vote, VoterId = voterId})).ToByteArray(),
                     NFactor = sigratureService.GetNFactor().ToByteArray(),
                     RandCoef = sigratureService.randomBigInt.ToByteArray(),
                     OriginalVote = vote

@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.Json;
 using Org.BouncyCastle.Math;
 using VotingApp.Common;
 using VotingApp.Server.Domain.Repositories;
@@ -45,14 +46,28 @@ namespace VotingApp.Server.Services
 
         public string Vote(SignedVotingPaper paper)
         {
+            Console.WriteLine(sigratureService.PublicRsaKey.EFactor.ToString());
             var decryptedData = rsaEncryption.Decrypt(paper.EncryptedData);
 
-            if (!sigratureService.VerifySignature(new BigInteger(Encoding.UTF8.GetBytes(paper.Signature)), decryptedData))
+            if (!sigratureService.VerifySignature(new BigInteger(paper.Signature), decryptedData))
             {
                 return "The signature was invalid";
             }
 
-            if (!int.TryParse(decryptedData, out int candidateId))
+            var decryptedContent = JsonSerializer.Deserialize<VotingData>(decryptedData);
+
+            if (decryptedContent == null || voterRepository.GetVoterById(decryptedContent.VoterId).Voted)
+            {
+                return "Such voter could not be found";
+            }
+            
+            var voter = voterRepository.GetVoterById(decryptedContent.VoterId);
+            if (voter.Voted)
+            {
+                return "You cannot vote twice";
+            }
+
+            if (!int.TryParse(decryptedContent?.Vote, out int candidateId))
             {
                 return "The vote could not be counted";
             }
@@ -63,6 +78,7 @@ namespace VotingApp.Server.Services
                 return "The given candidate does not exist";
             }
 
+            voter.Voted = true;
             candidate.Votes++;
 
             return "Your vote was successfully counted";
